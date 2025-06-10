@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath fill='%2316A34A' d='M89.6,35.6c-4.1-8.9-12.3-15.3-22.1-17.7l-4.1-1c-2.2-0.5-4.5,0.7-5.5,2.7L50,34.9l-7.9-15.3c-1-2-3.3-3.2-5.5-2.7l-4.1,1C22.7,20.3,14.5,26.7,10.4,35.6c-4.5,9.8-3.4,21.3,2.8,29.9l29.8,41.8c2.9,4.1,8.7,4.1,11.6,0l29.8-41.8C93,56.9,94.1,45.4,89.6,35.6z M50,61.1c-6.8,0-12.3-5.5-12.3-12.3s5.5-12.3,12.3-12.3s12.3,5.5,12.3,12.3S56.8,61.1,50,61.1z'/%3E%3C/svg%3E" type="image/svg+xml">
+    
+    <title>EcoBikeHub - A Revolução da Mobilidade Urbana</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA; /* Tom de branco levemente mais quente */
+            color: #212529; /* Preto suave para melhor leitura */
+        }
+        
+        /* Animação de entrada aprimorada */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1), transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Fundo do Hero com gradiente sutil e animação */
+        .hero-section {
+            background: linear-gradient(170deg, #FFFFFF 50%, #F0FDF4 100%); /* green-50 */
+        }
+        
+        /* Ilustração do Hero com sombra e animação suave */
+        .hero-image {
+            background-image: url('https://storage.googleapis.com/generativeai-downloads/images/ecobikehub_illustration.png');
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+            min-height: 350px;
+            filter: drop-shadow(0px 10px 30px rgba(0, 0, 0, 0.1));
+            transition: transform 0.5s ease-out;
+        }
+        .hero-image:hover {
+            transform: scale(1.03);
+        }
+        
+        /* Links de navegação com transição mais suave */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+            letter-spacing: 0.5px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #16A34A; /* green-600 */
+            transition: width 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .nav-link:hover {
+            color: #16A34A;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Efeito de brilho sutil em botões e cards */
+        .glow-on-hover {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .glow-on-hover::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 70%);
+            transform: translate(-50%, -50%) scale(0);
+            transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+            z-index: -1;
+        }
+        .glow-on-hover:hover::before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+
+        /* Cards com sombra e borda mais elegantes */
+        .feature-card {
+            background-color: #FFFFFF;
+            border-radius: 1rem; /* 16px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Estilo para títulos de seção */
+        .section-title {
+            font-weight: 800; /* ExtraBold */
+            letter-spacing: -0.5px;
+            color: #1F2937; /* gray-800 */
+        }
+
+        .section-subtitle {
+            color: #4B5563; /* gray-600 */
+            font-weight: 500;
+        }
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/90 backdrop-blur-xl shadow-sm sticky top-0 z-50 transition-all duration-300">
+        <nav class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <a href="#hero" class="flex items-center gap-3 text-3xl font-bold text-green-600">
+                <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M89.6,35.6c-4.1-8.9-12.3-15.3-22.1-17.7l-4.1-1c-2.2-0.5-4.5,0.7-5.5,2.7L50,34.9l-7.9-15.3c-1-2-3.3-3.2-5.5-2.7l-4.1,1C22.7,20.3,14.5,26.7,10.4,35.6c-4.5,9.8-3.4,21.3,2.8,29.9l29.8,41.8c2.9,4.1,8.7,4.1,11.6,0l29.8-41.8C93,56.9,94.1,45.4,89.6,35.6z M50,61.1c-6.8,0-12.3-5.5-12.3-12.3s5.5-12.3,12.3-12.3s12.3,5.5,12.3,12.3S56.8,61.1,50,61.1z" fill="#16A34A"/>
+                </svg>
+                <span class="font-extrabold">EcoBikeHub</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-10">
+                <a href="#desafio" class="nav-link text-gray-600 font-medium">O Desafio</a>
+                <a href="#solucao" class="nav-link text-gray-600 font-medium">A Solução</a>
+                <a href="#diferencial" class="nav-link text-gray-600 font-medium">Diferencial</a>
+                <a href="#futuro" class="nav-link text-gray-600 font-medium">Visão Futura</a>
+            </div>
+            <button id="mobile-menu-button" class="md:hidden text-gray-700 focus:outline-none">
+                <ion-icon name="menu-outline" class="w-8 h-8"></ion-icon>
+            </button>
+        </nav>
+        <div id="mobile-menu" class="hidden md:hidden px-6 pt-2 pb-4 border-t border-gray-200">
+            <a href="#desafio" class="block py-3 text-gray-600 hover:text-green-600 transition-colors">O Desafio</a>
+            <a href="#solucao" class="block py-3 text-gray-600 hover:text-green-600 transition-colors">A Solução</a>
+            <a href="#diferencial" class="block py-3 text-gray-600 hover:text-green-600 transition-colors">Diferencial</a>
+            <a href="#futuro" class="block py-3 text-gray-600 hover:text-green-600 transition-colors">Visão Futura</a>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero-section">
+            <div class="container mx-auto px-6 py-20 md:py-32 grid md:grid-cols-2 items-center gap-16">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-gray-900 mb-6 leading-tight fade-in-up">Pedale para um futuro mais <span class="text-green-600">verde</span> e <span class="text-green-600">conectado</span>.</h1>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-xl mb-12 fade-in-up" style="transition-delay: 150ms;">Apresentamos o EcoBikeHub: a solução de mobilidade urbana inteligente e sustentável que Hortolândia precisa, movida a energia solar e gerenciada na palma da sua mão.</p>
+                    <a href="#solucao" class="glow-on-hover bg-green-600 text-white font-bold py-4 px-10 rounded-lg hover:bg-green-700 transition-all transform hover:scale-105 duration-300 fade-in-up" style="transition-delay: 300ms;">Descubra a Inovação</a>
+                </div>
+                <div class="hero-image fade-in-up" style="transition-delay: 200ms;"></div>
+            </div>
+        </section>
+
+        <section id="desafio" class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-20 fade-in-up">
+                    <h2 class="section-title text-3xl md:text-4xl mb-4">O Desafio da Mobilidade Urbana</h2>
+                    <p class="section-subtitle max-w-3xl mx-auto text-lg">Cidades em crescimento enfrentam um dilema: como se mover de forma eficiente sem comprometer o meio ambiente e a qualidade de vida? Congestionamentos, poluição e a complexidade da "última milha" são barreiras diárias.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="feature-card p-8 text-center fade-in-up" style="transition-delay: 100ms;">
+                        <ion-icon name="car-sport-outline" class="text-6xl text-red-500 mx-auto mb-"></ion-icon>
+                        <h3 class="text-xl font-bold mb-2">Trânsito Crônico</h3>
+                        <p class="text-gray-600">Horas perdidas no trânsito que poderiam ser usadas para produtividade, lazer e convívio familiar.</p>
+                    </div>
+                    <div class="feature-card p-8 text-center fade-in-up" style="transition-delay: 200ms;">
+                        <ion-icon name="cloudy-outline" class="text-6xl text-gray-500 mx-auto mb-5"></ion-icon>
+                        <h3 class="text-xl font-bold mb-2">Poluição e Impacto Ambiental</h3>
+                        <p class="text-gray-600">A queima de combustíveis fósseis degrada a qualidade do ar e acelera as mudanças climáticas.</p>
+                    </div>
+                    <div class="feature-card p-8 text-center fade-in-up" style="transition-delay: 300ms;">
+                        <ion-icon name="walk-outline" class="text-6xl text-blue-500 mx-auto mb-5"></ion-icon>
+                        <h3 class="text-xl font-bold mb-2">A "Última Milha"</h3>
+                        <p class="text-gray-600">A dificuldade de conectar o transporte público ao destino final, desestimulando seu uso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="solucao" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="section-title text-3xl md:text-4xl mb-4">Nosso Ecossistema Integrado</h2>
+                    <p class="section-subtitle max-w-3xl mx-auto text-lg">O EcoBikeHub não é apenas uma bicicleta. É uma solução completa que une hardware inteligente, energia limpa e software intuitivo para criar uma experiência de mobilidade perfeita. Clique para explorar:</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="arch-card feature-card glow-on-hover p-8 border-2 border-transparent hover:border-green-500/50 cursor-pointer fade-in-up" data-id="estacao">
+                        <ion-icon name="sunny-outline" class="text-5xl text-green-500 mb-4"></ion-icon>
+                        <h3 class="text-2xl font-bold mb-3">Estação Autônoma</h3>
+                        <p class="text-gray-600">O ponto de partida. Movida a energia solar, serve como base de ancoragem e recarga, garantindo a sustentabilidade e resiliência do sistema.</p>
+                    </div>
+                    <div class="arch-card feature-card glow-on-hover p-8 border-2 border-transparent hover:border-yellow-500/50 cursor-pointer fade-in-up" style="transition-delay: 150ms;" data-id="ubi">
+                        <ion-icon name="bicycle-outline" class="text-5xl text-yellow-500 mb-4"></ion-icon>
+                        <h3 class="text-2xl font-bold mb-3">Bicicleta Inteligente (UBI)</h3>
+                        <p class="text-gray-600">O coração da operação. Equipada com GPS, trava eletrônica e sensores, cada bicicleta é um nó conectado na nossa rede IoT.</p>
+                    </div>
+                    <div class="arch-card feature-card glow-on-hover p-8 border-2 border-transparent hover:border-blue-500/50 cursor-pointer fade-in-up" style="transition-delay: 300ms;" data-id="app">
+                        <ion-icon name="phone-portrait-outline" class="text-5xl text-blue-500 mb-4"></ion-icon>
+                        <h3 class="text-2xl font-bold mb-3">Aplicativo & Nuvem</h3>
+                        <p class="text-gray-600">O centro de controle. Um app amigável para o usuário e uma plataforma robusta na nuvem para gerenciar tudo em tempo real.</p>
+                    </div>
+                </div>
+                <div id="arch-details-container" class="mt-12 p-8 bg-gray-50 rounded-xl min-h-[120px] flex items-center justify-center fade-in-up" style="display: none; transition: all 0.5s ease;">
+                    <p id="arch-details-text" class="text-gray-700 text-lg text-center max-w-4xl mx-auto"></p>
+                </div>
+            </div>
+        </section>
+
+        <section id="prototipo" class="py-24">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16 fade-in-up">
+            <h2 class="section-title text-3xl md:text-4xl mb-4">A Tecnologia em Ação</h2>
+            <p class="section-subtitle max-w-3xl mx-auto text-lg">Veja como nosso protótipo integra hardware e software em uma experiência coesa, unindo sustentabilidade e tecnologia de ponta.</p>
+        </div>
+        <div class="grid lg:grid-cols-2 gap-12 items-center">
+            <div class="fade-in-up">
+                <img src="imgs/Image_fx (12).jpg" alt="Protótipo do EcoBikeHub mostrando a estação, a bicicleta e o aplicativo" class="rounded-2xl shadow-2xl w-full h-auto">
+            </div>
+            <div class="fade-in-up" style="transition-delay: 150ms;">
+                <h3 class="text-2xl font-bold text-gray-800 mb-6">Tudo Conectado em Um Só Lugar</h3>
+                <ul class="space-y-6">
+                    <li class="flex items-start gap-4">
+                        <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full p-3 shadow">
+                            <ion-icon name="sunny-outline" class="text-2xl"></ion-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Energia Solar</h4>
+                            <p class="text-gray-600">Estações 100% autossuficientes que recarregam as bicicletas com energia limpa, reduzindo o impacto ambiental e os custos operacionais.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start gap-4">
+                        <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full p-3 shadow">
+                            <ion-icon name="lock-closed-outline" class="text-2xl"></ion-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Trava Inteligente (Smart Lock)</h4>
+                            <p class="text-gray-600">Destrave a bicicleta de forma segura e rápida usando o QR code no aplicativo, garantindo que apenas você tenha acesso.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start gap-4">
+                        <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full p-3 shadow">
+                            <ion-icon name="navigate-outline" class="text-2xl"></ion-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Rastreamento GPS</h4>
+                            <p class="text-gray-600">Localize estações e bicicletas disponíveis em tempo real. Para sua segurança, todas as viagens são monitoradas via GPS.</p>
+                        </div>
+                    </li>
+                     <li class="flex items-start gap-4">
+                        <div class="flex-shrink-0 bg-green-100 text-green-600 rounded-full p-3 shadow">
+                            <ion-icon name="phone-portrait-outline" class="text-2xl"></ion-icon>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-lg">Gestão por App</h4>
+                            <p class="text-gray-600">Controle toda a sua experiência pelo app: encontre bikes, planeje rotas, verifique o tempo de viagem e realize pagamentos de forma simples.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+        <section id="diferencial" class="py-24">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="section-title text-3xl md:text-4xl mb-4">Diferencial Competitivo</h2>
+                    <p class="section-subtitle max-w-3xl mx-auto text-lg">Analisamos o cenário para criar uma solução superior. Compare o EcoBikeHub com as alternativas e veja por que nossa abordagem é a mais completa.</p>
+                </div>
+                <div class="text-center mb-8 space-x-2 space-y-2 fade-in-up">
+                    <button class="comp-button bg-green-600 text-white py-2 px-5 rounded-full text-sm font-medium transition-all duration-300" data-criteria="sustentabilidade">Sustentabilidade</button>
+                    <button class="comp-button bg-gray-200 text-gray-700 py-2 px-5 rounded-full text-sm font-medium transition-all duration-300" data-criteria="custo_usuario">Custo ao Usuário</button>
+                    <button class="comp-button bg-gray-200 text-gray-700 py-2 px-5 rounded-full text-sm font-medium transition-all duration-300" data-criteria="conveniencia">Flexibilidade</button>
+                    <button class="comp-button bg-gray-200 text-gray-700 py-2 px-5 rounded-full text-sm font-medium transition-all duration-300" data-criteria="impacto_saude">Impacto na Saúde</button>
+                </div>
+                <div class="bg-white p-8 rounded-2xl shadow-lg fade-in-up">
+                    <div class="relative h-80 md:h-96">
+                        <canvas id="comparisonChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+         <section id="futuro" class="py-24 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16 fade-in-up">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Nosso Roteiro para o Futuro</h2>
+                    <p class="text-gray-600 max-w-3xl mx-auto text-lg">O protótipo é apenas o começo. Temos uma visão clara para escalar o EcoBikeHub e integrá-lo ainda mais ao tecido urbano, gerando valor contínuo para a cidade.</p>
+                </div>
+                <div class="grid md:grid-cols-3 gap-8">
+                    <div class="text-center fade-in-up">
+                        <div class="flex items-center justify-center bg-green-100 text-green-600 w-20 h-20 rounded-full mx-auto mb-4">
+                            <ion-icon name="analytics-outline" class="text-4xl"></ion-icon>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Fase 1: Expansão e Dados</h3>
+                        <p class="text-gray-600">Ampliar a rede de estações e coletar dados de uso para otimizar a operação e identificar as rotas mais utilizadas pela comunidade.</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 150ms;">
+                        <div class="flex items-center justify-center bg-blue-100 text-blue-600 w-20 h-20 rounded-full mx-auto mb-4">
+                            <ion-icon name="git-network-outline" class="text-4xl"></ion-icon>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Fase 2: Integração e IA</h3>
+                        <p class="text-gray-600">Integrar com o sistema de transporte público e usar IA para prever a demanda, otimizar o balanceamento da frota e realizar manutenção preditiva.</p>
+                    </div>
+                    <div class="text-center fade-in-up" style="transition-delay: 300ms;">
+                        <div class="flex items-center justify-center bg-yellow-100 text-yellow-600 w-20 h-20 rounded-full mx-auto mb-4">
+                            <ion-icon name="sparkles-outline" class="text-4xl"></ion-icon>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Fase 3: Novos Recursos</h3>
+                        <p class="text-gray-600">Introduzir gamificação, planos corporativos e sensores ambientais nas bicicletas, transformando a frota em uma rede de monitoramento da cidade.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-gray-900 text-white">
+        <div class="container mx-auto px-6 py-16 text-center">
+            <a href="#hero" class="flex items-center justify-center gap-3 text-3xl font-bold text-green-500 mb-4 transition-transform hover:scale-105">
+                <svg class="w-9 h-9" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M89.6,35.6c-4.1-8.9-12.3-15.3-22.1-17.7l-4.1-1c-2.2-0.5-4.5,0.7-5.5,2.7L50,34.9l-7.9-15.3c-1-2-3.3-3.2-5.5-2.7l-4.1,1C22.7,20.3,14.5,26.7,10.4,35.6c-4.5,9.8-3.4,21.3,2.8,29.9l29.8,41.8c2.9,4.1,8.7,4.1,11.6,0l29.8-41.8C93,56.9,94.1,45.4,89.6,35.6z M50,61.1c-6.8,0-12.3-5.5-12.3-12.3s5.5-12.3,12.3-12.3s12.3,5.5,12.3,12.3S56.8,61.1,50,61.1z" fill="#16A34A"/>
+                </svg>
+                <span class="font-extrabold">EcoBikeHub</span>
+            </a>
+            <p class="text-gray-400 max-w-2xl mx-auto">Um projeto de Engenharia da Computação dedicado a criar um futuro urbano mais sustentável, inteligente e saudável para todos.</p>
+            <p class="text-gray-500 text-sm mt-12">&copy; 2025 Projeto EcoBikeHub. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // --- Mobile Menu Toggle ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenuButton.querySelector('ion-icon').name = mobileMenu.classList.contains('hidden') ? 'menu-outline' : 'close-outline';
+            });
+
+            // --- Architecture Diagram Interaction ---
+            const archCards = document.querySelectorAll('.arch-card');
+            const archDetailsContainer = document.getElementById('arch-details-container');
+            const archDetailsText = document.getElementById('arch-details-text');
+            const archInfo = {
+                'estacao': 'Movida a energia solar, a estação é o pilar de sustentabilidade do sistema. Ela ancora as bicicletas, recarrega suas baterias com energia limpa e gerencia a disponibilidade de vagas, garantindo que sempre haja uma bike pronta para o próximo usuário.',
+                'ubi': 'Cada bicicleta é um dispositivo IoT. Equipada com GPS para localização, trava eletrônica para segurança, e sensores para monitorar o uso e detectar quedas, a UBI envia dados em tempo real para nossa plataforma, garantindo gestão total da frota.',
+                'app': 'A experiência do usuário é central. Através de um aplicativo intuitivo, o usuário pode localizar, reservar, desbloquear e pagar por sua viagem. Tudo isso é suportado por uma plataforma de backend robusta que processa milhares de dados para manter o sistema funcionando perfeitamente.'
+            };
+
+            let lastSelectedCard = null;
+            archCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const id = card.dataset.id;
+
+                    if(lastSelectedCard) {
+                        lastSelectedCard.classList.remove('ring-4');
+                    }
+                    card.classList.add('ring-4');
+                    lastSelectedCard = card;
+
+                    if (archInfo[id]) {
+                        archDetailsContainer.style.opacity = 0;
+                        setTimeout(() => {
+                            archDetailsText.textContent = archInfo[id];
+                            archDetailsContainer.style.display = 'flex';
+                            archDetailsContainer.style.opacity = 1;
+                        }, 200);
+                    }
+                });
+            });
+
+            // --- Comparison Chart (Chart.js) ---
+            if (typeof Chart !== 'undefined') {
+                Chart.defaults.font.family = "'Poppins', sans-serif";
+                Chart.defaults.font.weight = '500';
+
+                const chartDataStore = {
+                    labels: ['EcoBikeHub', 'Carro Particular', 'Transporte Público'],
+                    datasetsConfig: {
+                        sustentabilidade: {
+                            label: 'Nível de Sustentabilidade',
+                            data: [5, 1, 3],
+                            title: 'Sustentabilidade (Emissões CO²)'
+                        },
+                        custo_usuario: {
+                            label: 'Custo para o Usuário',
+                            data: [4, 1, 3],
+                            title: 'Custo para o Usuário'
+                        },
+                        conveniencia: {
+                            label: 'Falta de Flexibilidade e Acesso',
+                            data: [4, 3, 2],
+                            title: 'Falta de Flexibilidade e Acesso'
+                        },
+                        impacto_saude: {
+                            label: 'Impacto na Saúde',
+                            data: [5, 1, 1],
+                            title: 'Impacto na Saúde'
+                        }
+                    }
+                };
+
+                const valueLabels = ['Muito Alto', 'Alto', 'Médio', 'Baixo', 'Muito Baixo', 'N/A'];
+                const ctx = document.getElementById('comparisonChart').getContext('2d');
+                const initialDataset = chartDataStore.datasetsConfig.sustentabilidade;
+
+                const comparisonChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: chartDataStore.labels,
+                        datasets: [{
+                            label: initialDataset.label,
+                            data: initialDataset.data,
+                            backgroundColor: ['#16A34A', '#EF4444', '#3B82F6'],
+                            borderRadius: 8,
+                            barThickness: 35,
+                            borderSkipped: false,
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        indexAxis: 'y',
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                max: 5.5,
+                                grid: { display: false, drawBorder: false },
+                                ticks: {
+                                    stepSize: 1,
+                                    callback: (value) => valueLabels[value] || '',
+                                    font: { size: 12 }
+                                }
+                            },
+                            y: {
+                                grid: { display: false, drawBorder: false },
+                                ticks: { font: { size: 14, weight: '600' } }
+                            }
+                        },
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: { enabled: false },
+                            title: {
+                                display: true,
+                                text: initialDataset.title,
+                                font: { size: 18, weight: '700' },
+                                padding: { bottom: 25 },
+                                color: '#1F2937'
+                            }
+                        },
+                        animation: {
+                            duration: 1000,
+                            easing: 'easeInOutQuart'
+                        }
+                    }
+                });
+
+                const compButtons = document.querySelectorAll('.comp-button');
+                compButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const criteria = button.dataset.criteria;
+                        const newConfig = chartDataStore.datasetsConfig[criteria];
+                        if (newConfig) {
+                            comparisonChart.data.datasets[0].data = newConfig.data;
+                            comparisonChart.data.datasets[0].label = newConfig.label;
+                            comparisonChart.options.plugins.title.text = newConfig.title;
+                            comparisonChart.update();
+
+                            compButtons.forEach(btn => {
+                                btn.classList.remove('bg-green-600', 'text-white', 'scale-110');
+                                btn.classList.add('bg-gray-200', 'text-gray-700');
+                            });
+                            button.classList.add('bg-green-600', 'text-white', 'scale-110');
+                            button.classList.remove('bg-gray-200', 'text-gray-700');
+                        }
+                    });
+                });
+            } else {
+                console.error("Chart.js não carregou. O gráfico não será exibido.");
+                const chartContainer = document.querySelector('.chart-container');
+                if (chartContainer) {
+                    chartContainer.innerHTML = "<p class='text-center text-red-500'>Erro ao carregar o gráfico. Verifique sua conexão com a internet.</p>";
+                }
+            }
+
+            // --- Fade-in Animation on Scroll ---
+            if ('IntersectionObserver' in window) {
+                const observer = new IntersectionObserver((entries, obs) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                            obs.unobserve(entry.target);
+                        }
+                    });
+                }, { threshold: 0.15 });
+
+                document.querySelectorAll('.fade-in-up').forEach(element => {
+                    observer.observe(element);
+                });
+            } else {
+                // Fallback for older browsers
+                document.querySelectorAll('.fade-in-up').forEach(element => {
+                    element.classList.add('visible');
+                });
+            }
+        });
+    </script>
+</body>
+</html>
